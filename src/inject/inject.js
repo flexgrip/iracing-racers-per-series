@@ -11,12 +11,20 @@ chrome.extension.sendMessage({}, function(response) {
 			// ----------------------------------------------------------
 			exec(() => {
 
+
+
+
 				getRegisteredRacers();
 
-				setTimeout(function(){
-					$(".footerSection.rps_table").remove();
-					getRegisteredRacers();
-				}, 10000);
+				/* Loop at 10 sec interval*/
+				function timeout() {
+					setTimeout(function () {
+						$(".footerSection.rps_table").remove();
+						getRegisteredRacers();
+					}, 10000);
+				}
+				timeout();
+
 
 				function getRegisteredRacers() {
 					$.post("/membersite/member/GetTotalSessionJoinedCountsBySeason").done(function( data ) {
@@ -57,7 +65,7 @@ chrome.extension.sendMessage({}, function(response) {
 							list_of_series += '<tr class="rpc_series">' 
 								+ '<td class="bg_white"><img class="rpc_image '+fixed_class+' '+multi_class+'" src="/'+sorted[i]['whatshotimg']+'"></td>'
 								+ '<td>&nbsp;&nbsp;&nbsp;</td>'
-								+ '<td>'+sorted[i]['seriesname']+'</td>'
+								+ '<td><a class="rpc_select" href="#col_'+sorted[i]['seasonid']+'">'+sorted[i]['seriesname']+'</a></td>'
 								+ '<td>&nbsp;&nbsp;&nbsp;</td>'
 								+ '<td>'+sorted[i]['registered']+'</td>'
 								+ '<td><a class="rpc_select" href="javascript:selectSeries('+sorted[i]['seasonid']+','+current_quarter+');">Select</a></td>'
