@@ -19,8 +19,13 @@ chrome.extension.sendMessage({}, function(response) {
 				/* Loop at 10 sec interval*/
 				function timeout() {
 					setTimeout(function () {
+						/* Remove old dom elements */
 						$(".footerSection.rps_table").remove();
+						$(".footerSeparator.footerSeparatorRps").remove();
+
+						/* Call the main function */
 						getRegisteredRacers();
+						timeout();
 					}, 10000);
 				}
 				timeout();
@@ -72,7 +77,7 @@ chrome.extension.sendMessage({}, function(response) {
 								+ "</tr>";
 						}
 
-						console.log(sorted);
+						/*console.log(sorted);*/
 
 						$(".footerSection.iracersOnline").before(
 							'<td class="footerSection rps_table" style="width: 140px;">'
@@ -84,7 +89,7 @@ chrome.extension.sendMessage({}, function(response) {
 								+'<div id="myracers_count_spacer" style="width: 140px; height: 12px;"></div>'
 								+'<div class="myRacersCount" id="rps_count">Racers Per Series</div>'
 							+'</td>'
-							+'<td class="footerSeparator"></td>'
+							+'<td class="footerSeparator footerSeparatorRps"></td>'
 						);
 					});
 				}
